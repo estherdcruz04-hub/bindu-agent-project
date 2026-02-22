@@ -1,0 +1,2 @@
+Bindu==2026.8.5
+SQLAlchemy>=2.0

@@ -1,0 +1,52 @@
+site_name: research-assistant-agent
+repo_url: https://github.com/estherdcruz04-hub/research-assistant-agent
+site_url: https://estherdcruz04-hub.github.io/research-assistant-agent
+site_description: a research assistant that finds and summarizes information.
+site_author: Esther
+edit_uri: edit/main/docs/
+repo_name: estherdcruz04-hub/research-assistant-agent
+copyright: Maintained by <a href="https://estherdcruz04-hub.com">estherdcruz04-hub</a>.
+
+nav:
+  - Home: index.md
+  - Modules: modules.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: ["src/research_assistant_agent"]
+theme:
+  name: material
+  feature:
+    tabs: true
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/estherdcruz04-hub/research-assistant-agent
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/research-assistant-agent
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
