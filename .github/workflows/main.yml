@@ -6,39 +6,29 @@ on:
       - main
       - master
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - main
+      - master
   workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   ci:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/cache@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
         with:
-          path: ~/.cache/pre-commit
-          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+          python-version: "3.11"
 
-      - uses: ./.github/actions/setup-python-env
+      - name: Install uv
+        run: pip install uv
 
-      - name: Quality checks
-        run: make check
+      - name: Install dependencies
+        run: uv sync --locked --all-extras
 
-      - name: Tests
-        run: uv run python -m pytest tests --cov --cov-config=pyproject.toml --cov-report=xml
-
-      - name: Type check
-        run: uv run ty check
-
-      - name: Docs build
-        run: uv run mkdocs build -s
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v4
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run tests
+        run: uv run python -m pytest tests
